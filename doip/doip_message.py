@@ -1,5 +1,5 @@
 import struct
-from constants.doip_constants import DOIP_MESSAGE_DEFINITIONS, DoipMsgTypes
+from utils_constants.doip_constants import DOIP_MESSAGE_DEFINITIONS, DoipMsgTypes
 
 class DoipMessage:
     def __init__(self, payload_type, **kwargs):
@@ -21,15 +21,15 @@ class DoipMessage:
 
     def pack(self):
         buffer = bytearray(1400)
-        format = self.definition.get('format', 0)
+        _format = self.definition.get('format', 0)
         _h = list(self.header.values())
         _v = list(self.payload_fields.values())
 
         if 'user_data' in self.payload_fields:
-            format = format + str(self.header['payload_length']-self.definition.get('length', 0)) + 'B'
+            _format = _format + str(self.header['payload_length']-self.definition.get('length', 0)) + 'B'
             _v = [*_v[:-1], *_v[-1]]
-        struct.pack_into(format, buffer, 0, *_h, *_v)
-        return buffer[:struct.calcsize(format)].hex()
+        struct.pack_into(_format, buffer, 0, *_h, *_v)
+        return buffer[:struct.calcsize(_format)].hex()
 
     def __str__(self):
         combined = {**self.header, **self.payload_fields}

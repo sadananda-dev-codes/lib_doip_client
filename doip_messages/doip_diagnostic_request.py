@@ -1,6 +1,6 @@
 
 from doip.doip_message import DoipMessage
-from constants.doip_constants import DoipMsgTypes
+from utils_constants.doip_constants import DoipMsgTypes
 
 class DiagnosticMessage(DoipMessage):
     def __init__(self, source_address, target_address, user_data):
