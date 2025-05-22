@@ -1,8 +1,10 @@
 import struct
 from utils_constants.doip_constants import DOIP_MESSAGE_DEFINITIONS, DoipMsgTypes
+from typing import Dict
 
 class DoipMessage:
-    def __init__(self, payload_type, **kwargs):
+    def __init__(self, payload_type,
+                 **kwargs:Dict):
         self.payload_type = payload_type
         self.header = {
             'protocol_version': 0x02,

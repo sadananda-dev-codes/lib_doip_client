@@ -14,17 +14,16 @@ class SocketInfo:
             self.socket_que = queue.Queue()
 
     def update_socket(self,
-                      _socket_hash,
-                      socket_status,
+                      _socket_hash: int,
+                      socket_status: int,
                       _tcp_socket):
 
         if socket_status == -1:
             del self.socket_dict[_socket_hash]
-            del self.socket_dict[_socket_hash]
+            del self.tcp_sockets_dict[_socket_hash]
         else:
             self.socket_dict[_socket_hash] = socket_status
             self.tcp_sockets_dict[_socket_hash] = _tcp_socket
-            print(self.socket_dict, socket_status)
 
     def does_socket_exist(self,
                           _socket_hash):

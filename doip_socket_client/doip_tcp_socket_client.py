@@ -2,6 +2,7 @@
 from utils_constants.doip_utils import *
 from doip_socket_client.doip_tcp_socket_info import SocketInfo
 import socket
+from typing import Dict
 
 class DoipTcpSocket(socket.socket):
 
@@ -28,14 +29,14 @@ class DoipTcpClient:
             return self
 
     def doip_bind_to_socket(self,
-                            **client_ip_endpoint):
+                            **client_ip_endpoint: Dict):
 
         assert self._client_socket is not None, '[Error] Socket already open — close it before opening a new one'
         self._client_ip_endpoint = client_ip_endpoint
         self._client_socket.bind(tuple(self._client_ip_endpoint.values()))
 
     def doip_connect_server(self,
-                            **server_ip_endpoint):
+                            **server_ip_endpoint: Dict):
 
         assert self._client_ip_endpoint is not None, '[error] [client socket] should be bind to valid ip'
 
@@ -59,10 +60,8 @@ class DoipTcpClient:
                 print("Target machine refused connection")
             except OSError as e:
                 print(f"OS error: {e}")
-
         else:
             raise DoipException('Socket Already Exists')
-
 
     def doip_connect_close_connection(self):
         self._client_socket.close()
@@ -74,16 +73,5 @@ class DoipTcpClient:
         return self._client_socket.fileno()
 
     def doip_send_data(self,
-                       data):
+                       data: str):
         self._client_socket.sendall(data)
-
-    '''
-    def doip_get_last_diag_msg_status(self):
-        return self.diag_request
-    '''
-
-
-
-
-
-
